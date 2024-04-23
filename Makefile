@@ -6,11 +6,11 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:03:26 by mpierrot          #+#    #+#              #
-#    Updated: 2024/04/11 13:30:10 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/04/23 19:22:28 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_F	= 
+SRC_F	= main.c parsing_map.c 
 
 SRC_D	= srcs/
 OBJ_D = objs
