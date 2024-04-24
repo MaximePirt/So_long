@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:42:52 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/03/12 13:01:46 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:51:46 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_readline(int fd, char *res, char *tamp)
 			buff = NULL;
 			break ;
 		}
-		res = ft_strjoin(res, buff);
+		res = ft_strjoinwhichfree(res, buff);
 		if (((ft_check(res, '\n') || ft_check(res, '\0'))) && buff)
 			lastfill(buff, tamp);
 		free(buff);
