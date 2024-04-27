@@ -6,7 +6,7 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 12:26:58 by mpierrot          #+#    #+#              #
-#    Updated: 2024/03/30 03:47:59 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/04/27 05:46:19 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,15 +23,16 @@ SRC_FILES = libft/mandatory/ft_atoi.c libft/mandatory/ft_bzero.c libft/mandatory
 			libft/lst/ft_lstadd_back.c libft/lst/ft_lstadd_front.c libft/lst/ft_lstclear.c \
 			libft/lst/ft_lstcpy.c libft/lst/ft_lstdelone.c libft/lst/ft_lstiter.c libft/lst/ft_lstlast.c \
 			libft/lst/ft_lstmap.c libft/lst/ft_lstnew.c libft/lst/ft_lstsize.c libft/lst/ft_pop_push.c libft/lst/ft_print_stack.c \
-			libft/calculs/calcul_mediane.c \
+			libft/calculs/calcul_mediane.c libft/ft_check.c \
 			GNL/get_next_line.c GNL/get_next_line_utils.c \
 			ft_printf/ft_printf.c ft_printf/ft_putptrfunc.c ft_printf/ft_usefulfonc.c \
+			libft/ft_free_tab.c
 
 SRCDIR = libft GNL ft_printf
 OBJ_D = objs
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_D)/%.o)
 CC = clang
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g -Wall -Werror -Wextra
 NAME = libft.a
 AR = ar rcs
 RM = rm -rf

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:16:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/23 19:47:20 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/27 05:45:55 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include "ft_printf.h"
+# include "get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -55,6 +56,8 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t				ft_strlen(const char *str);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
+int					ft_strncmp_end(const char *s1, char *s2, size_t n);
+char				*invert_str(char *s2);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);
 char				*ft_strrchr(const char *s, int c);
@@ -82,5 +85,10 @@ void				print_stack(t_list *stack);
 
 // Some calculs functions
 size_t				calcul_mediane(t_list *stack);
+
+// News
+int					ft_check(char *res, char c);
+int					ft_checknop(char *res, char c);
+void				free_tab(char **tab);
 
 #endif

@@ -1,35 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/22 20:50:46 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/27 03:34:37 by mpierrot         ###   ########.fr       */
+/*   Created: 2024/04/27 03:33:00 by mpierrot          #+#    #+#             */
+/*   Updated: 2024/04/27 04:26:50 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../includes/libft.h"
 
-// Buffer size
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
+int	ft_check(char *res, char c)
+{
+	int	i;
+	int	a;
 
-// External Libs
-# include "libft.h"
-# include <stdlib.h>
-# include <unistd.h>
+	a = ft_strlen(res);
+	i = 0;
+	if (!a)
+		return (0);
+	while (i != a)
+	{
+		if (res[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-// main file
-char	*ft_readline(int fd, char *res, char *tamp);
-int		ft_result_sort(char **res, char **tamp);
-char	*get_next_line(int fd);
+int	ft_checknop(char *res, char c)
+{
+	int	i;
+	int	a;
 
-// GNL utils
-
-char	*lastfill(char *buff, char *tamp);
-
-#endif
+	a = ft_strlen(res);
+	i = 0;
+	if (!a)
+		return (0);
+	while (i != a)
+	{
+		if (res[i] == c)
+			return (-1);
+		i++;
+	}
+	return (1);
+}

@@ -6,18 +6,18 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:03:26 by mpierrot          #+#    #+#              #
-#    Updated: 2024/04/23 19:22:28 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/04/27 03:17:53 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_F	= main.c parsing_map.c 
+SRC_F	= main.c parsing_map.c fill_w_water.c
 
 SRC_D	= srcs/
 OBJ_D = objs
 
 OBJ_F = $(SRC_F:%.c=$(OBJ_D)/%.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 RM = rm -rf
 AR = ar rcs
 NAME = so_long
