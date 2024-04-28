@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:32:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/27 07:47:48 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/28 06:39:46 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@
 // 	return (0);
 // }
 
-void	exit_func(int fd, char *str, char *str2, char **tab)
+void	exit_func(int fd, t_map *lst, char *str, char **tab)
 {
+	printf("GROS YA SOUCIS");
 	(void)fd;
 	if (fd)
 		close(fd);
+	if (lst)
+		free(str);
 	if (str)
 		free(str);
-	if (str2)
-		free(str2);
 	if (tab)
 		free_tab(tab);
 	exit(EXIT_FAILURE);

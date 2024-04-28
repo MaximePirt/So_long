@@ -1,7 +1,3 @@
-floodfill
 
-gerer les encadrements de maps : check str[0] et str[size] == 1 
 
-retour de count
-retirer le \n a la fin de chaque ligne pcq ptn ca m enerve
- Gerer le segfault
+

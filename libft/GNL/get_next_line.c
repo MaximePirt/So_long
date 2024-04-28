@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:42:52 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/23 19:51:46 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/28 04:02:46 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_cleantamp(char *tamp, int i)
 	size_t	j;
 	size_t	a;
 
-	a = ft_strlen(tamp);
+	a = ft_strlengnl(tamp);
 	j = 0;
 	while (tamp[j] && j < (a - i))
 	{
@@ -57,9 +57,9 @@ char	*ft_readline(int fd, char *res, char *tamp)
 	char	*buff;
 
 	i = 0;
-	while (!ft_check(res, '\0') && !ft_check(res, '\n'))
+	while (!ft_checkgnl(res, '\0') && !ft_checkgnl(res, '\n'))
 	{
-		buff = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+		buff = ft_callocgnl(sizeof(char), (BUFFER_SIZE + 1));
 		if (!buff)
 			return (NULL);
 		i = read(fd, buff, BUFFER_SIZE);
@@ -69,8 +69,8 @@ char	*ft_readline(int fd, char *res, char *tamp)
 			buff = NULL;
 			break ;
 		}
-		res = ft_strjoinwhichfree(res, buff);
-		if (((ft_check(res, '\n') || ft_check(res, '\0'))) && buff)
+		res = ft_strjoingnl(res, buff);
+		if (((ft_checkgnl(res, '\n') || ft_checkgnl(res, '\0'))) && buff)
 			lastfill(buff, tamp);
 		free(buff);
 		buff = NULL;
@@ -83,9 +83,9 @@ int	ft_result_sort(char **res, char **tamp)
 	int	i;
 
 	i = 0;
-	if (!ft_strlen(*res))
+	if (!ft_strlengnl(*res))
 		i = -1;
-	else if (ft_check(*res, '\0') || !ft_strlen(*tamp))
+	else if (ft_checkgnl(*res, '\0') || !ft_strlengnl(*tamp))
 	{
 		if (*tamp)
 			i = 1;
@@ -106,22 +106,22 @@ int	ft_result_sort(char **res, char **tamp)
 char	*get_next_line(int fd)
 {
 	char		*res;
-	static char	*tamp[1024];
+	static char	*tamp;
 	int			i;
 
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (!tamp[fd])
-		tamp[fd] = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
-	if (!tamp[fd])
+	if (!tamp)
+		tamp = ft_callocgnl(sizeof(char), (BUFFER_SIZE + 1));
+	if (!tamp)
 		return (NULL);
-	res = ft_calloc(sizeof(char), (BUFFER_SIZE + 1));
+	res = ft_callocgnl(sizeof(char), (BUFFER_SIZE + 1));
 	if (!res)
 		return (NULL);
-	firstfill(tamp[fd], res);
-	res = ft_readline(fd, res, tamp[fd]);
-	i = ft_result_sort(&res, &tamp[fd]);
+	firstfill(tamp, res);
+	res = ft_readline(fd, res, tamp);
+	i = ft_result_sort(&res, &tamp);
 	if (i == 1)
 		return (NULL);
 	return (res);
