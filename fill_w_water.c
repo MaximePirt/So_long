@@ -6,13 +6,13 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/28 07:06:39 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/29 03:31:40 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	filltab(char *file, t_map *map)
+static void	filltab(char *file, t_map *map)
 {
 	char	*line;
 	int		map_size;
@@ -41,7 +41,7 @@ void	filltab(char *file, t_map *map)
 	return ;
 }
 
-int	hm_compo(char **tab)
+static int	hm_compo(char **tab)
 {
 	int	i;
 	int	a;
@@ -88,44 +88,34 @@ void	flood_fill(t_map *map, int x, int y)
 	return ;
 }
 
-void	init_t_map(t_map *map, char *str)
-{
-	map->size_x = check_size(str);
-	map->size_y = ft_strlen(map->tab[0]);
-	map->col = 0;
-	map->line = 0;
-	map->components = 0;
-	map->player = 0;
-	map->exit = 0;
-	return ;
-}
-
-void	where_start_fill(t_map *map)
+static void	where_start_fill(t_map *map)
 {
 	while (map->col < map->size_x && map->col < map->size_y
 		&& (map->tab[map->col][map->line]
-			&& map->tab[map->col][map->line] == '1'))
+			&& map->tab[map->col][map->line] != 'P'))
 	{
 		while (map->col < map->size_x && map->col < map->size_y
 			&& (map->tab[map->col][map->line]
-				&& map->tab[map->col][map->line] == '1'))
+				&& map->tab[map->col][map->line] != 'P'))
 			map->line++;
 		if (map->tab[map->col][map->line]
-			&& map->tab[map->col][map->line] != '1')
+			&& map->tab[map->col][map->line] == 'P')
 			return ;
 		map->line = 0;
 		map->col++;
 	}
 }
 
-int	preptoflood(char *str)
+t_map	*preptoflood(char *str)
 {
 	int		i;
 	int		component;
 	t_map	*map;
 
-	map = ft_calloc(2, sizeof(t_map));
 	i = 0;
+	map = ft_calloc(2, sizeof(t_map));
+	if (!map)
+		exit_func(0, NULL, NULL, NULL);
 	filltab(str, map);
 	init_t_map(map, str);
 	component = hm_compo(map->tab);
@@ -133,13 +123,12 @@ int	preptoflood(char *str)
 	if (map->tab[map->col][map->line] && map->tab[map->col][map->line] != '\n')
 		flood_fill(map, map->col, map->line);
 	else
-		exit_func(0, map, NULL, map->tab);
+		exit_func(0, map, NULL, NULL);
 	map->components += map->player + map->exit;
 	if (component != map->components || map->components < 3)
-		exit_func(0, map, NULL, map->tab);
+		exit_func(0, map, NULL, NULL);
 	else
 		printf("YOUHOU VASY MAHKU JTE SUCE MERCI");
-	free(map);
-	free_tab(map->tab);
-	return (0);
+	filltab(str, map);
+	return (map);
 }

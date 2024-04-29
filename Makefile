@@ -6,7 +6,7 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:03:26 by mpierrot          #+#    #+#              #
-#    Updated: 2024/04/27 03:17:53 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/04/28 23:56:30 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,16 @@ OBJ_D = objs
 OBJ_F = $(SRC_F:%.c=$(OBJ_D)/%.o)
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
+CLIBS = -g -Wall -Wextra -Werror -lSDL2
 RM = rm -rf
 AR = ar rcs
 NAME = so_long
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -I includes/ -I $(LIBFT_DIR)/includes/
+MLXDIR = MacroLibX
+MLX = $(MLXDIR)/libmlx.so
+INCLUDES = -I includes/ -I $(LIBFT_DIR)/includes/ 
+INCLUDES2 = -I includes/ -I $(MLXDIR)/includes/
 
 DEFCOLOR	= \033[0;39m
 CYAN		= \033[1;96m
@@ -37,10 +41,13 @@ RED			= \033[0;91m
 all: $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -s -C $(LIBFT_DIR)
+	@$(MAKE) -s -j -C $(LIBFT_DIR)
 
-$(NAME): $(OBJ_F) $(LIBFT)
-	@$(CC) $(OBJ_F) $(LIBFT) -o $(NAME) $(CFLAGS) $(INCLUDES)
+$(MLX):
+	@$(MAKE) -s -j -C $(MLXDIR)
+
+$(NAME): $(OBJ_F) $(LIBFT) $(MLX)
+	@$(CC) $(OBJ_F) $(MLX) $(LIBFT) -o $(NAME) $(CLIBS) $(INCLUDES) $(INCLUDES2)
 	@echo "$(CYAN)So_long has been compiled successfully$(DEFCOLOR)"
 
 $(OBJ_D)/%.o: %.c
@@ -51,11 +58,14 @@ $(OBJ_D)/%.o: %.c
 
 clean:
 	@$(MAKE) -s -C $(LIBFT_DIR) clean
+	@$(MAKE) -s -C $(MLXDIR) clean
 	@$(RM) objs 
 	@echo "$(PURPLE)So_long object files cleaned !!$(DEFCOLOR)"
 
 fclean: clean
 	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@$(MAKE) -s -C $(MLXDIR) fclean
+
 	@$(RM) $(NAME)
 	@echo "$(RED)So_long executable has been destroy$(DEFCOLOR)"
 

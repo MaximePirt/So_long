@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/28 07:02:49 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:21:42 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ int	check_name(char *file)
 	return (0);
 }
 
-// int	checking_in_progress(char *str, size_t size, int fd, int i)
-// {
-// }
 static int	how_many_line(char *file)
 {
 	int		fd;
@@ -59,52 +56,38 @@ static int	how_many_line(char *file)
 	return (i);
 }
 
+void	oh_problems(size_t size, int that_much, char *str, t_map *test)
+{
+	if ((test->i == that_much && ft_strlen(str) != size - 1) || (test->i > 1
+			&& test->i != that_much && ft_strlen(str) != size) || str[0] != '1'
+		|| str[size - 2] != '1')
+		exit_func(test->fd, NULL, str, NULL);
+}
+
 int	check_size(char *file)
 {
 	char	*str;
-	int		fd;
-	int		i;
 	size_t	size;
 	int		that_much;
+	t_map	test;
 
-	i = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		exit_func(fd, NULL, NULL, NULL);
-	str = get_next_line(fd);
-	if (!str || str[0] != '1')
-		exit_func(fd, NULL, NULL, NULL);
+	test.i = 0;
+	test.fd = open(file, O_RDONLY);
+	if (test.fd == -1)
+		exit_func(test.fd, NULL, NULL, NULL);
+	str = get_next_line(test.fd);
 	size = ft_strlen(str);
 	that_much = how_many_line(file);
 	while (str && str[0] != 0)
 	{
-		i++;
-		if ((i == that_much && ft_strlen(str) != size - 1) || (i > 1
-				&& i != that_much && ft_strlen(str) != size) || str[0] != '1'
-			|| str[size - 2] != '1')
-			exit_func(fd, NULL, str, NULL);
+		test.i++;
+		oh_problems(size, that_much, str, &test);
 		if (ft_check(str, '\0'))
 			break ;
 		free(str);
-		str = get_next_line(fd);
+		str = get_next_line(test.fd);
 	}
 	free(str);
-	close(fd);
-	return (i);
-}
-
-int	main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	if (check_name(argv[1]) == -1)
-		return (-1);
-	if (check_size(argv[1]) == -1)
-	{
-		printf("AH");
-		return (-1);
-	}
-	if (preptoflood(argv[1]) == -1)
-		return (-1);
-	return (0);
+	close(test.fd);
+	return (test.i);
 }

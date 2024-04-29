@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 20:50:40 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/28 04:03:37 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:16:00 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	*ft_callocgnl(size_t count, size_t size)
 
 	if (count <= 0 || size <= 0)
 		return (malloc(0));
-	// if (2147483647 / count < size)
-	// 	return (NULL);
 	mallocsize = count * size;
 	tmp = malloc(mallocsize);
 	if (!tmp)

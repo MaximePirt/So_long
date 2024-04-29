@@ -1,3 +1,21 @@
 
 
 
+gerer l invalid read
+
+Gerer transparence pour superpositions !
+faire un key handler
+
+
+w 119
+s 115
+a 97
+d 100
+
+fh 259
+fb 258
+fg 260
+fd 261
+
+p 112
+esc 27
