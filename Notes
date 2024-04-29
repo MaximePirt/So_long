@@ -1,10 +1,14 @@
-
-
-
 gerer l invalid read
 
 Gerer transparence pour superpositions !
 faire un key handler
+
+Enregistrer la position du player,
+le but etant que lorsque je joue, je ne bouge plus dutout la map, je deplace uniquement les coordonnees enregistrer du player et des ennemis
+enregistrer aussi les coordonnees des consommables
+comme ca quand je bouge le player je peux le faire bouger pixel/pixel, en l afficher avec coordonnees*pixel, et une fois que pixel = limite la c est 64, ca va retourner a 32,
+je bouge ma coordonnee du player +-1, et je remet le pixel a 0
+rendu fluide comme ca
 
 
 w 119
