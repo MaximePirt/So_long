@@ -1,26 +1,34 @@
-gerer l invalid read
+gerer l invalid read 
 
 Gerer transparence pour superpositions !
-faire un key handler
+faire un key handler ✅
 
-Enregistrer la position du player,
+Enregistrer la position du player, ✅
 le but etant que lorsque je joue, je ne bouge plus dutout la map, je deplace uniquement les coordonnees enregistrer du player et des ennemis
-enregistrer aussi les coordonnees des consommables
+enregistrer aussi les coordonnees des consommables✅
 comme ca quand je bouge le player je peux le faire bouger pixel/pixel, en l afficher avec coordonnees*pixel, et une fois que pixel = limite la c est 64, ca va retourner a 32,
 je bouge ma coordonnee du player +-1, et je remet le pixel a 0
 rendu fluide comme ca
 
-diviser mon fichier main afin de le ranger
+soucis quand je clique sur la croix ✅
 
-w 119
-s 115
-a 97
-d 100
+diviser mon fichier main afin de le ranger ✅
 
-fh 259
-fb 258
-fg 260
-fd 261
+w 26
+s 22
+a 4
+d 7
 
-p 112
-esc 27
+fh 82
+fb 81
+fg 80
+fd 79
+
+p 19
+esc 41
+
+
+multiplayer???
+
+gametic, while,  
+cpu time limite 20 exec/s

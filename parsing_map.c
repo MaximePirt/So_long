@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/30 09:27:39 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:50:53 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	check_size(t_map *map)
 	if (fd == -1)
 		exit_func(fd, map, NULL, NULL);
 	str = get_next_line(fd);
+	if (!str)
+		exit_func(fd, map, NULL, NULL);
 	map->line_len = ft_strlen(str);
 	map->size_x = map->line_len;
 	map->size_y = how_many_line(map->file_name);

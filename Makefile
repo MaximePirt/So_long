@@ -6,11 +6,12 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:03:26 by mpierrot          #+#    #+#              #
-#    Updated: 2024/04/28 23:56:30 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/04/30 11:34:16 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_F	= main.c parsing_map.c fill_w_water.c
+SRC_F	= 	main.c parsing_map.c fill_w_water.c lst_func.c  mlx-img.c\
+			utils_to_delet.c
 
 SRC_D	= srcs/
 OBJ_D = objs

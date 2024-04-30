@@ -6,93 +6,183 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:32:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/30 09:45:22 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:32:27 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_map	*init_t_map(char *str)
+void	check_components(t_map *map)
+{
+	t_componentlst	*tmp;
+
+	tmp = map->component_data->lst_component;
+	while (tmp)
+	{
+		if (tmp->x == map->player_data.y && tmp->y == map->player_data.x
+			&& tmp->is_loot == 0)
+		{
+			tmp->is_loot = 1;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (tmp && tmp->is_loot == 1)
+		map->component_data->hm_component--;
+}
+
+void	move_up(t_map *map)
+{
+	if (map->map[(map->col - 1)][map->line] == '1')
+		return ;
+	else
+	{
+		map->player_data.y -= 1;
+		if (map->map[map->player_data.y][map->player_data.x] == 'C')
+			check_components(map);
+		if (map->map[map->player_data.y + 1][map->player_data.x] == 'E')
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_exit, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		else
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_floor, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		if (map->component_data->hm_component < 3
+			&& map->map[map->player_data.y][map->player_data.x] == 'E')
+			mlx_loop_end(map->mlx_data.mlx);
+		map->col--;
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.p_sprite, map->line * map->mlx_data.img_w, map->col
+			* map->mlx_data.img_h);
+	}
+	return ;
+}
+void	move_down(t_map *map)
+{
+	if (map->map[(map->col + 1)][map->line] == '1')
+		return ;
+	else
+	{
+		map->player_data.y += 1;
+		if (map->map[map->player_data.y][map->player_data.x] == 'C')
+			check_components(map);
+		if (map->map[map->player_data.y - 1][map->player_data.x] == 'E')
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_exit, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		else
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_floor, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		if (map->component_data->hm_component < 3
+			&& map->map[map->player_data.y][map->player_data.x] == 'E')
+			mlx_loop_end(map->mlx_data.mlx);
+		map->col++;
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.p_sprite, map->line * map->mlx_data.img_w, map->col
+			* map->mlx_data.img_h);
+	}
+	return ;
+}
+void	move_left(t_map *map)
+{
+	if (map->map[map->col][map->line - 1] == '1')
+		return ;
+	else
+	{
+		map->player_data.x -= 1;
+		if (map->map[map->player_data.y][map->player_data.x] == 'C')
+			check_components(map);
+		if (map->map[map->player_data.y][map->player_data.x + 1] == 'E')
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_exit, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		else
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_floor, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		if (map->component_data->hm_component < 3
+			&& map->map[map->player_data.y][map->player_data.x + 1] == 'E')
+			mlx_loop_end(map->mlx_data.mlx);
+		map->line--;
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.p_sprite, map->line * map->mlx_data.img_w, map->col
+			* map->mlx_data.img_h);
+	}
+	return ;
+}
+void	move_right(t_map *map)
+{
+	if (map->map[map->col][map->line + 1] == '1')
+		return ;
+	else
+	{
+		map->player_data.x += 1;
+		if (map->map[map->player_data.y][map->player_data.x] == 'C')
+			check_components(map);
+		if (map->map[map->player_data.y][map->player_data.x - 1] == 'E')
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_exit, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		else
+			mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+				map->mlx_data.img_floor, map->line * map->mlx_data.img_w,
+				map->col * map->mlx_data.img_h);
+		if (map->component_data->hm_component < 3
+			&& map->map[map->player_data.y][map->player_data.x] == 'E')
+			mlx_loop_end(map->mlx_data.mlx);
+		map->line++;
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.p_sprite, map->line * map->mlx_data.img_w, map->col
+			* map->mlx_data.img_h);
+	}
+	return ;
+}
+int	key_hook(int key, void *mlx)
 {
 	t_map	*map;
 
-	map = ft_calloc(1, sizeof(t_map));
-	if (!map)
-		exit_func(0, NULL, NULL, NULL);
-	map->file_name = str;
-	map->col = 0;
-	map->line = 0;
-	map->size_x = 0;
-	map->size_y = 0;
-	map->component_data = ft_calloc(1, sizeof(t_component));
-	if (!map->component_data)
-		exit_func(0, map, NULL, NULL);
-	map->component_data->hm_component = 0;
-	map->player_data.player = 0;
-	map->exit_data.exit = 0;
-	return (map);
+	map = mlx;
+	// init_img(map);
+	if (key == 41)
+		mlx_loop_end(map->mlx_data.mlx);
+	if (key == 26 || key == 82)
+		move_up(map);
+	if (key == 22 || key == 81)
+		move_down(map);
+	if (key == 4 || key == 80)
+		move_left(map);
+	if (key == 7 || key == 79)
+		move_right(map);
+	if (key == 19)
+		return (0);
+	return (0);
 }
 
-void	init_img(t_map *map)
+int	window_hook(int event, void *param)
 {
-	map->mlx_data.img_floor = mlx_png_file_to_image(map->mlx_data.mlx,
-			"textures/floor.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	map->mlx_data.img_wall = mlx_png_file_to_image(map->mlx_data.mlx,
-			"textures/wall.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	map->mlx_data.p_sprite = mlx_png_file_to_image(map->mlx_data.mlx,
-			"sprites/player.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	map->mlx_data.img_compo = mlx_png_file_to_image(map->mlx_data.mlx,
-			"textures/cons.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	map->mlx_data.img_exit = mlx_png_file_to_image(map->mlx_data.mlx,
-			"sprites/exit.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	if (!map->mlx_data.img_floor || !map->mlx_data.img_wall
-		|| !map->mlx_data.img_exit || !map->mlx_data.p_sprite
-		|| !map->mlx_data.img_compo)
-		exit_func(0, map, NULL, NULL);
+	t_map	*map;
+
+	map = param;
+	if (event == 0)
+		mlx_loop_end(map->mlx_data.mlx);
+	return (0);
 }
 
-void	forest(t_map *map, int i, int j)
+void	destroy(t_map *map)
 {
-	if (map->map[j][i] == '1')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_wall, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
-	else if (map->map[j][i] == '0')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_floor, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
-	else if (map->map[j][i] == 'C')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_compo, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
-	else if (map->map[j][i] == 'P')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.p_sprite, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
-	else if (map->map[j][i] == 'E')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_exit, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
-}
-void	image_in_wdw(t_map *map)
-{
-	int	i;
-	int	j;
-
-	init_img(map);
-	i = 0;
-	j = 0;
-	while (map->map[j])
-	{
-		while (map->map[j][i] && map->map[j][i] != '\n')
-		{
-			forest(map, i, j);
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-	return ;
+	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_floor);
+	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_wall);
+	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.p_sprite);
+	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_exit);
+	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_compo);
+	mlx_destroy_window(map->mlx_data.mlx, map->mlx_data.win);
+	mlx_destroy_display(map->mlx_data.mlx);
+	ft_t_compolstclear(map->component_data->lst_component);
+	free(map->component_data);
+	free_tab(map->map);
+	free(map);
 }
 
 int	main(int argc, char **argv)
@@ -110,15 +200,15 @@ int	main(int argc, char **argv)
 	if (!map->mlx_data.win)
 		exit_func(0, map, NULL, NULL);
 	image_in_wdw(map);
+	mlx_on_event(map->mlx_data.mlx, map->mlx_data.win, MLX_KEYDOWN, key_hook,
+		map);
+	mlx_on_event(map->mlx_data.mlx, map->mlx_data.win, MLX_WINDOW_EVENT,
+		window_hook, map);
+	mlx_string_put(map->mlx_data.mlx, map->mlx_data.win, 12, 12, 0xFFFFFFFF,
+		"score");
 	mlx_loop(map->mlx_data.mlx);
-	/// destroy
-	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_floor);
-	mlx_destroy_image(map->mlx_data.mlx, map->mlx_data.img_wall);
-	mlx_destroy_window(map->mlx_data.mlx, map->mlx_data.win);
-	mlx_destroy_display(map->mlx_data.mlx);
-	free_tab(map->map);
-	free(map->component_data);
-	free(map);
+	//
+	destroy(map);
 	return (0);
 }
 

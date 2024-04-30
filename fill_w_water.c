@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/30 09:25:44 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:54:33 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,36 @@ static int	hm_compo(char **tab)
 	return (compo);
 }
 
+void	fill_struc_compo(t_map *map, char c, int x, int y)
+{
+	if (c == 'C')
+	{
+		map->component_data->hm_component++;
+		ft_lstadd_back_cmpnt(&map->component_data->lst_component,
+			ft_lstnew_cmpnt(map->component_data->lst_component, x, y));
+	}
+	else if (c == 'P')
+	{
+		map->player_data.player++;
+		map->player_data.x = y;
+		map->player_data.y = x;
+	}
+	else if (c == 'E')
+	{
+		map->exit_data.exit++;
+		map->exit_data.x = x;
+		map->exit_data.x = y;
+	}
+	return ;
+}
+
 void	flood_fill(t_map *map, int x, int y)
 {
 	if (!map->map_fill[x][y] || x < 0 || x >= map->size_y || y < 0
 		|| y >= map->size_x || map->map_fill[x][y] == '1'
 		|| map->map_fill[x][y] == 'F')
 		return ;
-	if (map->map_fill[x][y] == 'C')
-		map->component_data->hm_component++;
-	else if (map->map_fill[x][y] == 'P')
-		map->player_data.player++;
-	else if (map->map_fill[x][y] == 'E')
-		map->exit_data.exit++;
+	fill_struc_compo(map, map->map_fill[x][y], x, y);
 	map->map_fill[x][y] = 'F';
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x + 1, y);
@@ -122,26 +140,14 @@ void	copy_map_to_mapfill(t_map *map)
 	}
 	return ;
 }
-
-void	print_map(t_map *map)
+void	clean_flood(t_map *map)
 {
-	int	i;
+	t_componentlst	*tmp;
 
-	i = 0;
-	while (map->map[i])
-	{
-		fprintf(stderr, "%s\n", map->map[i]);
-		i++;
-	}
-	write(2, "\n", 1);
-	write(2, "\n", 1);
-	write(2, "\n", 1);
-	i = 0;
-	while (map->map_fill[i])
-	{
-		fprintf(stderr, "%s\n", map->map_fill[i]);
-		i++;
-	}
+	free_tab(map->map_fill);
+	tmp = map->component_data->lst_component;
+	map->component_data->lst_component = map->component_data->lst_component->next;
+	free(tmp);
 }
 
 t_map	*preptoflood(char *str)
@@ -164,14 +170,11 @@ t_map	*preptoflood(char *str)
 		flood_fill(map, map->col, map->line);
 	else
 		exit_func(0, map, NULL, NULL);
-	////////////////
-	print_map(map);
-	///////////////
 	map->component_data->hm_component += map->player_data.player
 		+ map->exit_data.exit;
 	if (component != map->component_data->hm_component
 		|| map->component_data->hm_component < 3)
 		exit_func(0, map, NULL, NULL);
-	free_tab(map->map_fill);
+	clean_flood(map);
 	return (map);
 }
