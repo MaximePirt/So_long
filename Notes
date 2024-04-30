@@ -10,6 +10,7 @@ comme ca quand je bouge le player je peux le faire bouger pixel/pixel, en l affi
 je bouge ma coordonnee du player +-1, et je remet le pixel a 0
 rendu fluide comme ca
 
+diviser mon fichier main afin de le ranger
 
 w 119
 s 115

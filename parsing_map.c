@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/28 20:21:42 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:27:39 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,38 @@ static int	how_many_line(char *file)
 	return (i);
 }
 
-void	oh_problems(size_t size, int that_much, char *str, t_map *test)
+void	oh_problems(t_map *map, char *str, int i)
 {
-	if ((test->i == that_much && ft_strlen(str) != size - 1) || (test->i > 1
-			&& test->i != that_much && ft_strlen(str) != size) || str[0] != '1'
-		|| str[size - 2] != '1')
-		exit_func(test->fd, NULL, str, NULL);
+	if ((i == map->size_y && ft_strlen(str) != map->line_len - 1) || (i > 1
+			&& i != map->size_y && ft_strlen(str) != map->line_len)
+		|| str[0] != '1' || str[map->line_len - 2] != '1')
+		exit_func(map->fd, NULL, str, NULL);
 }
 
-int	check_size(char *file)
+void	check_size(t_map *map)
 {
 	char	*str;
-	size_t	size;
-	int		that_much;
-	t_map	test;
+	int		fd;
+	int		i;
 
-	test.i = 0;
-	test.fd = open(file, O_RDONLY);
-	if (test.fd == -1)
-		exit_func(test.fd, NULL, NULL, NULL);
-	str = get_next_line(test.fd);
-	size = ft_strlen(str);
-	that_much = how_many_line(file);
+	i = 0;
+	fd = open(map->file_name, O_RDONLY);
+	if (fd == -1)
+		exit_func(fd, map, NULL, NULL);
+	str = get_next_line(fd);
+	map->line_len = ft_strlen(str);
+	map->size_x = map->line_len;
+	map->size_y = how_many_line(map->file_name);
 	while (str && str[0] != 0)
 	{
-		test.i++;
-		oh_problems(size, that_much, str, &test);
+		i++;
+		oh_problems(map, str, i);
 		if (ft_check(str, '\0'))
 			break ;
 		free(str);
-		str = get_next_line(test.fd);
+		str = get_next_line(fd);
 	}
 	free(str);
-	close(test.fd);
-	return (test.i);
+	close(fd);
+	return ;
 }

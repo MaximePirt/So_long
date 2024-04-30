@@ -6,36 +6,35 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/29 03:31:40 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/04/30 09:25:44 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	filltab(char *file, t_map *map)
+static void	filltab(t_map *map)
 {
-	char	*line;
-	int		map_size;
-	int		i;
 	int		fd;
+	int		i;
+	char	*line;
 
-	i = 0;
-	map_size = check_size(file);
-	fd = open(file, O_RDONLY);
+	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func(fd, map, NULL, map->tab);
+		exit_func(0, map, NULL, NULL);
 	line = get_next_line(fd);
-	map->tab = malloc(sizeof(char *) * (map_size + 1));
-	map_size = ft_strlen(line);
+	map->size_x = ft_strlen(line);
+	i = 0;
 	while (line)
 	{
-		map->tab[i] = ft_strdup(line);
-		map->tab[i][map_size - 1] = '\0';
+		map->map[i] = ft_strdup(line);
+		map->map[i][map->size_x - 1] = '\0';
 		free(line);
+		line = NULL;
 		line = get_next_line(fd);
+		if (!line)
+			break ;
 		i++;
 	}
-	map->tab[i] = NULL;
 	free(line);
 	close(fd);
 	return ;
@@ -69,66 +68,110 @@ static int	hm_compo(char **tab)
 
 void	flood_fill(t_map *map, int x, int y)
 {
-	if (x < 0 || x >= map->size_x || y < 0 || y >= map->size_y
-		|| map->tab[x][y] == '1' || map->tab[x][y] == 'F')
+	if (!map->map_fill[x][y] || x < 0 || x >= map->size_y || y < 0
+		|| y >= map->size_x || map->map_fill[x][y] == '1'
+		|| map->map_fill[x][y] == 'F')
 		return ;
-	if (map->tab[x][y] == 'C')
-		map->components++;
-	else if (map->tab[x][y] == 'P')
-		map->player++;
-	else if (map->tab[x][y] == 'E')
-		map->exit++;
-	map->tab[x][y] = 'F';
+	if (map->map_fill[x][y] == 'C')
+		map->component_data->hm_component++;
+	else if (map->map_fill[x][y] == 'P')
+		map->player_data.player++;
+	else if (map->map_fill[x][y] == 'E')
+		map->exit_data.exit++;
+	map->map_fill[x][y] = 'F';
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x, y - 1);
 	flood_fill(map, x, y + 1);
-	if (map->player > 1 || map->exit > 1)
+	if (map->player_data.player > 1 || map->exit_data.exit > 1)
 		exit_func(0, map, NULL, NULL);
 	return ;
 }
 
 static void	where_start_fill(t_map *map)
 {
-	while (map->col < map->size_x && map->col < map->size_y
-		&& (map->tab[map->col][map->line]
-			&& map->tab[map->col][map->line] != 'P'))
+	while (map->col < map->size_y && map->col < map->size_x
+		&& (map->map[map->col][map->line]
+			&& map->map[map->col][map->line] != 'P'))
 	{
-		while (map->col < map->size_x && map->col < map->size_y
-			&& (map->tab[map->col][map->line]
-				&& map->tab[map->col][map->line] != 'P'))
+		while (map->col < map->size_y && map->col < map->size_x
+			&& (map->map[map->col][map->line]
+				&& map->map[map->col][map->line] != 'P'))
 			map->line++;
-		if (map->tab[map->col][map->line]
-			&& map->tab[map->col][map->line] == 'P')
+		if (map->map[map->col][map->line]
+			&& map->map[map->col][map->line] == 'P')
 			return ;
 		map->line = 0;
 		map->col++;
 	}
 }
 
-t_map	*preptoflood(char *str)
+void	copy_map_to_mapfill(t_map *map)
 {
-	int		i;
-	int		component;
-	t_map	*map;
+	size_t	i;
+
+	map->map_fill = ft_calloc(sizeof(char *), (map->size_y + 1));
+	if (!map->map_fill)
+		exit_func(0, map, NULL, NULL);
+	i = 0;
+	while (map->map[i])
+	{
+		map->map_fill[i] = ft_strdup(map->map[i]);
+		map->map_fill[i][map->size_x - 1] = '\0';
+		i++;
+	}
+	return ;
+}
+
+void	print_map(t_map *map)
+{
+	int	i;
 
 	i = 0;
-	map = ft_calloc(2, sizeof(t_map));
-	if (!map)
-		exit_func(0, NULL, NULL, NULL);
-	filltab(str, map);
-	init_t_map(map, str);
-	component = hm_compo(map->tab);
+	while (map->map[i])
+	{
+		fprintf(stderr, "%s\n", map->map[i]);
+		i++;
+	}
+	write(2, "\n", 1);
+	write(2, "\n", 1);
+	write(2, "\n", 1);
+	i = 0;
+	while (map->map_fill[i])
+	{
+		fprintf(stderr, "%s\n", map->map_fill[i]);
+		i++;
+	}
+}
+
+t_map	*preptoflood(char *str)
+{
+	int		component;
+	t_map	*map;
+	int		i;
+
+	i = 0;
+	map = init_t_map(str);
+	check_size(map);
+	map->map = ft_calloc(sizeof(char *), (map->size_y + 1));
+	if (!map->map)
+		exit_func(0, map, NULL, NULL);
+	filltab(map);
+	copy_map_to_mapfill(map);
+	component = hm_compo(map->map);
 	where_start_fill(map);
-	if (map->tab[map->col][map->line] && map->tab[map->col][map->line] != '\n')
+	if (map->map[map->col][map->line] && map->map[map->col][map->line] != '\n')
 		flood_fill(map, map->col, map->line);
 	else
 		exit_func(0, map, NULL, NULL);
-	map->components += map->player + map->exit;
-	if (component != map->components || map->components < 3)
+	////////////////
+	print_map(map);
+	///////////////
+	map->component_data->hm_component += map->player_data.player
+		+ map->exit_data.exit;
+	if (component != map->component_data->hm_component
+		|| map->component_data->hm_component < 3)
 		exit_func(0, map, NULL, NULL);
-	else
-		printf("YOUHOU VASY MAHKU JTE SUCE MERCI");
-	filltab(str, map);
+	free_tab(map->map_fill);
 	return (map);
 }
