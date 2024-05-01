@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:34:03 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/30 19:36:25 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/01 02:17:56 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,23 @@
 
 void	init_img(t_map *map)
 {
+	map->mlx_data.img_compo = mlx_png_file_to_image(map->mlx_data.mlx,
+			"textures/cons.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
 	map->mlx_data.img_floor = mlx_png_file_to_image(map->mlx_data.mlx,
 			"textures/floor.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
 	map->mlx_data.img_wall = mlx_png_file_to_image(map->mlx_data.mlx,
 			"textures/wall.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
 	map->mlx_data.p_sprite = mlx_png_file_to_image(map->mlx_data.mlx,
 			"sprites/player.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
-	map->mlx_data.img_compo = mlx_png_file_to_image(map->mlx_data.mlx,
-			"textures/cons.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
 	map->mlx_data.img_exit = mlx_png_file_to_image(map->mlx_data.mlx,
 			"sprites/exit.png", &map->mlx_data.img_w, &map->mlx_data.img_h);
 	if (!map->mlx_data.img_floor || !map->mlx_data.img_wall
 		|| !map->mlx_data.img_exit || !map->mlx_data.p_sprite
 		|| !map->mlx_data.img_compo)
+	{
+		destroy(map, 1);
 		exit_func(0, map, NULL, NULL);
+	}
 }
 
 void	forest(t_map *map, int i, int j)

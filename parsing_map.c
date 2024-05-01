@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/04/30 20:50:53 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/01 02:56:20 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ static int	how_many_line(char *file)
 	return (i);
 }
 
-void	oh_problems(t_map *map, char *str, int i)
+void	oh_problems(t_map *map, char *str, int i, int fd)
 {
 	if ((i == map->size_y && ft_strlen(str) != map->line_len - 1) || (i > 1
 			&& i != map->size_y && ft_strlen(str) != map->line_len)
 		|| str[0] != '1' || str[map->line_len - 2] != '1')
-		exit_func(map->fd, NULL, str, NULL);
+		exit_func(fd, map, str, NULL);
 }
 
 void	check_size(t_map *map)
@@ -83,7 +83,7 @@ void	check_size(t_map *map)
 	while (str && str[0] != 0)
 	{
 		i++;
-		oh_problems(map, str, i);
+		oh_problems(map, str, i, fd);
 		if (ft_check(str, '\0'))
 			break ;
 		free(str);

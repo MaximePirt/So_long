@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:33:50 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/01 00:04:29 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/01 04:34:58 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_map
 	int						i;
 	int						j;
 	int						fd;
+	int						score;
 	size_t					size;
 	struct s_map			*next;
 }							t_map;
@@ -115,6 +116,7 @@ void						init_img(t_map *map);
 // exit
 void						exit_func(int fd, t_map *lst, char *str,
 								char **tab);
+void						destroy(t_map *map, int which);
 
 // lst_func
 void						ft_lstadd_back_cmpnt(t_componentlst **lst,

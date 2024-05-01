@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:34:56 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/01 00:05:16 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/01 04:35:12 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_map	*init_t_map(char *str)
 	map->size_x = 0;
 	map->size_y = 0;
 	map->i = 0;
+	map->score = 0;
 	map->component_data = ft_calloc(1, sizeof(t_components));
 	if (!map->component_data)
 		exit_func(0, map, NULL, NULL);
