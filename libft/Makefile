@@ -6,7 +6,7 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 12:26:58 by mpierrot          #+#    #+#              #
-#    Updated: 2024/04/27 05:46:19 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/05/02 04:32:25 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ SRC_FILES = libft/mandatory/ft_atoi.c libft/mandatory/ft_bzero.c libft/mandatory
 SRCDIR = libft GNL ft_printf
 OBJ_D = objs
 OBJ_FILES = $(SRC_FILES:%.c=$(OBJ_D)/%.o)
-CC = clang
-CFLAGS = -g -Wall -Werror -Wextra
+CC = cc
+CFLAGS =  -Wall -Werror -Wextra
 NAME = libft.a
 AR = ar rcs
 RM = rm -rf

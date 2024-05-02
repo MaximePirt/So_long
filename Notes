@@ -32,3 +32,19 @@ multiplayer???
 
 gametic, while,  
 cpu time limite 20 exec/s
+
+
+RETIRER LE -G DU MAKEFILE AINSI QUE LES FICHIERS INUTILES !!!
+
+
+Gerer le HW_COMPO < 3, j ai changer pour eco 2 lignes en faisant l addition sur la meme ligne a la fin du floodfill ✅
+
+trouver ou transformer le player en 0 pour ne pas avoir de soucis avec P
+
+
+Leak pour map :
+11
+11
+
+str[0] && str[map->size] 
+11110111
