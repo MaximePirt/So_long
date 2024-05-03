@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:50:29 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:15:47 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ static int	how_many_line_bonus(char *file)
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit_func_bonus(fd, NULL, NULL);
+		exit_func_bonus(0, NULL, NULL);
 	str = get_next_line(fd);
 	while (str)
 	{
 		i++;
 		free(str);
+		str = NULL;
 		str = get_next_line(fd);
 	}
 	free(str);
+	str = NULL;
 	close(fd);
 	return (i);
 }
@@ -60,7 +62,10 @@ void	oh_problems_bonus(t_map *map, char *str, int i, int fd)
 {
 	if ((i == map->size_y && ft_strlen(str) != map->line_len - 1) || (i > 1
 			&& i != map->size_y && ft_strlen(str) != map->line_len)
-		|| str[0] != '1' || str[map->line_len - 2] != '1')
+		|| str[0] != '1' || str[map->line_len - 2] != '1' || (i == map->size_y
+			&& ft_check_only(str, '1') == -1) || (i == 1 && ft_check_only(str,
+				'1') == -1) || map->size_y < 3 || ((i > 1 && i != map->size_y)
+			&& ft_check_only_string(str, "10ECP\n") == -1))
 	{
 		free(str);
 		str = NULL;
@@ -77,7 +82,7 @@ void	check_size_bonus(t_map *map)
 	i = 1;
 	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func_bonus(fd, map, NULL);
+		exit_func_bonus(0, map, NULL);
 	str = get_next_line(fd);
 	if (!str)
 		exit_func_bonus(fd, map, NULL);

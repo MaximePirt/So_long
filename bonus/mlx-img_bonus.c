@@ -6,14 +6,67 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:34:03 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 12:01:58 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:24:31 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
+void	check_opening_bonus(t_map *map)
+{
+	int	fd;
+
+	fd = open("bonus/textures/cons.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/textures/floor.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/textures/wall.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/sprites/player.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/sprites/exit.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+}
+
+void	check_opening_bonus_p(t_map *map)
+{
+	int	fd;
+
+	fd = open("bonus/textures/consp.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/textures/floorp.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/textures/wallp.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/sprites/playerp.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+	fd = open("bonus/sprites/exitp.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL);
+	close(fd);
+}
+
 void	init_img_bonus(t_map *map)
 {
+	check_opening_bonus(map);
 	destroy_bonus(map, 1);
 	map->mlx_data.img_compo = mlx_png_file_to_image(map->mlx_data.mlx,
 			"bonus/textures/cons.png", &map->mlx_data.img_w,
@@ -115,13 +168,6 @@ void	change_pov(t_map *map)
 	}
 	mlx_clear_window(map->mlx_data.mlx, map->mlx_data.win);
 	image_in_wdw_bonus(map);
-	// if (c == 'E')
-	// 	mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-	// 		map->mlx_data.img_exit, map->player_data.y * map->mlx_data.img_w,
-	// 		map->player_data.x * map->mlx_data.img_h);
-	printf("\n-----------\n%c\n %s \n-------\n", c,
-		map->map[map->player_data.y]);
-	// if (c == 'E')
 	map->map[map->player_data.y][map->player_data.x] = c;
 }
 

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:32:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 10:55:49 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:20:04 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	main(int argc, char **argv)
 		key_hook_bonus, map);
 	mlx_on_event(map->mlx_data.mlx, map->mlx_data.win, MLX_WINDOW_EVENT,
 		window_hook_bonus, map);
+	// mlx_string_put(map->mlx_data.mlx, map->mlx_data.win, 12, 12, 0xFFFFFFFF,
+	// 	"score");
 	mlx_loop(map->mlx_data.mlx);
 	destroy_bonus(map, 2);
 	return (0);

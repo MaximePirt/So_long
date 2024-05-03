@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:28:13 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:02:17 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	how_many_line(char *file)
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit_func(fd, NULL, NULL);
+		exit_func(0, NULL, NULL);
 	str = get_next_line(fd);
 	while (str)
 	{
@@ -60,7 +60,10 @@ void	oh_problems(t_map *map, char *str, int i, int fd)
 {
 	if ((i == map->size_y && ft_strlen(str) != map->line_len - 1) || (i > 1
 			&& i != map->size_y && ft_strlen(str) != map->line_len)
-		|| str[0] != '1' || str[map->line_len - 2] != '1')
+		|| str[0] != '1' || str[map->line_len - 2] != '1' || (i == map->size_y
+			&& ft_check_only(str, '1') == -1) || (i == 1 && ft_check_only(str,
+				'1') == -1) || map->size_y < 3 || ((i > 1 && i != map->size_y)
+			&& ft_check_only_string(str, "10ECP\n") == -1))
 	{
 		free(str);
 		str = NULL;
@@ -77,7 +80,7 @@ void	check_size(t_map *map)
 	i = 1;
 	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func(fd, map, NULL);
+		exit_func(0, map, NULL);
 	str = get_next_line(fd);
 	if (!str)
 		exit_func(fd, map, NULL);

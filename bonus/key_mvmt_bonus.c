@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:28:18 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 15:38:54 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:24:47 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	move_up_bonus(t_map *map)
 			* map->mlx_data.img_h);
 	}
 	map->score++;
-	ft_printf("%d\n", map->score);
+	print_score(map);
 }
 
 void	move_down_bonus(t_map *map)
@@ -67,7 +67,7 @@ void	move_down_bonus(t_map *map)
 			* map->mlx_data.img_h);
 	}
 	map->score++;
-	ft_printf("%d\n", map->score);
+	print_score(map);
 }
 
 void	move_left_bonus(t_map *map)
@@ -96,7 +96,7 @@ void	move_left_bonus(t_map *map)
 			* map->mlx_data.img_h);
 	}
 	map->score++;
-	ft_printf("%d\n", map->score);
+	print_score(map);
 }
 
 void	move_right_bonus(t_map *map)
@@ -125,7 +125,7 @@ void	move_right_bonus(t_map *map)
 			* map->mlx_data.img_h);
 	}
 	map->score++;
-	ft_printf("%d\n", map->score);
+	print_score(map);
 }
 
 int	key_hook_bonus(int key, void *mlx)

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 07:10:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:15:04 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	filltab_bonus(t_map *map)
 		i++;
 	}
 	free(line);
+	line = NULL;
 	close(fd);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:19:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:46:21 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:15:28 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	clean_flood_bonus(t_map *map)
 	tmp = map->component_data->lst_component;
 	map->component_data->lst_component = map->component_data->lst_component->next;
 	free(tmp);
+	map->map_fill = NULL;
+	tmp = NULL;
 }
 
 int	hm_compo_bonus(char **tab)

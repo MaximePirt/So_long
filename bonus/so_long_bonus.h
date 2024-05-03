@@ -6,12 +6,12 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:33:50 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 05:14:05 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:29:35 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 # include "../MacroLibX/includes/mlx.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
@@ -95,6 +95,7 @@ typedef struct s_map
 	int						j;
 	int						fd;
 	int						score;
+	char					*print_score;
 	size_t					size;
 	struct s_map			*next;
 }							t_map;
@@ -137,6 +138,9 @@ void						move_down_bonus(t_map *map);
 void						move_left_bonus(t_map *map);
 void						move_right_bonus(t_map *map);
 int							key_hook_bonus(int key, void *mlx);
+
+// print score.c
+void						print_score(t_map *map);
 
 // end.c
 void						destroy_bonus(t_map *map, int which);

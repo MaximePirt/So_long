@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:34:06 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 11:06:14 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:14:51 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	destroy_bonus(t_map *map, int which)
 		free(map->component_data);
 		free_tab(map->map);
 		free(map);
+		map->component_data = NULL;
+		map->map = NULL;
+		map = NULL;
 	}
 }
 
@@ -49,7 +52,8 @@ void	exit_func_bonus(int fd, t_map *lst, char **tab)
 			ft_t_compolstclear_bonus(lst->component_data->lst_component);
 		if (lst->component_data)
 			free(lst->component_data);
-		free_tab(lst->map);
+		if (lst->map)
+			free_tab(lst->map);
 		if (lst->map_fill)
 			free_tab(lst->map_fill);
 		free(lst);
