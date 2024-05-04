@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:19:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 22:15:28 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:41:28 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	copy_map_to_mapfill_bonus(t_map *map)
 
 	map->map_fill = ft_calloc(sizeof(char *), (map->size_y + 1));
 	if (!map->map_fill)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 3);
 	i = 0;
 	while (map->map[i])
 	{
@@ -56,7 +56,7 @@ int	hm_compo_bonus(char **tab)
 		{
 			if (tab[a][i] != '1' && tab[a][i] != '0' && tab[a][i] != 'C'
 				&& tab[a][i] != 'E' && tab[a][i] != 'P' && tab[a][i] != '\n')
-				exit_func_bonus(0, NULL, tab);
+				exit_func_bonus(0, NULL, tab, 4);
 			if (tab[a][i] == 'C' || tab[a][i] == 'E' || tab[a][i] == 'P')
 				compo++;
 			i++;

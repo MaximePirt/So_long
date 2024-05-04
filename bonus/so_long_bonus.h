@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:33:50 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 15:29:35 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:37:20 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ typedef struct s_mlx
 	void					*img_compo;
 	void					*img_exit;
 	void					*p_sprite;
+	void					*img_floor_b;
+	void					*img_wall_b;
+	void					*img_compo_b;
+	void					*img_exit_b;
+	void					*p_sprite_b;
 	int						img_w;
 	int						img_h;
 	int						w_pov;
@@ -119,6 +124,7 @@ void						copy_map_to_mapfill_bonus(t_map *map);
 // window-mlx
 void						image_in_wdw_bonus(t_map *map);
 void						init_img_bonus(t_map *map);
+void						init_img_bonus_p(t_map *map);
 void						change_pov(t_map *map);
 // lst_func
 void						ft_lstadd_back_cmpnt_bonus(t_componentlst **lst,
@@ -144,7 +150,8 @@ void						print_score(t_map *map);
 
 // end.c
 void						destroy_bonus(t_map *map, int which);
-void						exit_func_bonus(int fd, t_map *lst, char **tab);
+void						exit_func_bonus(int fd, t_map *lst, char **tab,
+								int error_code);
 
 // main.c
 int							window_hook_bonus(int event, void *param);

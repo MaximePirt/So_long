@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:27:42 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:36:15 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	filltab(t_map *map)
 
 	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 2);
 	line = get_next_line(fd);
 	map->size_x = ft_strlen(line);
 	i = 0;
@@ -76,7 +76,7 @@ void	flood_fill(t_map *map, int x, int y)
 	flood_fill(map, x, y - 1);
 	flood_fill(map, x, y + 1);
 	if (map->player_data.player > 1 || map->exit_data.exit > 1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 5);
 	return ;
 }
 
@@ -109,20 +109,17 @@ t_map	*preptoflood(char *str)
 	check_size(map);
 	map->map = ft_calloc(sizeof(char *), (map->size_y + 1));
 	if (!map->map)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 3);
 	filltab(map);
 	copy_map_to_mapfill(map);
 	component = hm_compo(map->map);
 	where_start_fill(map);
-	if (map->map[map->col][map->line] && map->map[map->col][map->line] != '\n')
-		flood_fill(map, map->col, map->line);
-	else
-		exit_func(0, map, NULL);
+	flood_fill(map, map->col, map->line);
 	map->component_data->hm_component += map->player_data.player
 		+ map->exit_data.exit;
 	if (component != map->component_data->hm_component
 		|| map->component_data->hm_component < 3)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 5);
 	clean_flood(map);
 	return (map);
 }

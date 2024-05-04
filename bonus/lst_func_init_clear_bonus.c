@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:26:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 05:29:59 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:44:06 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_map	*init_t_map_bonus(char *str)
 
 	map = ft_calloc(1, sizeof(t_map));
 	if (!map)
-		exit_func_bonus(0, NULL, NULL);
+		exit_func_bonus(0, NULL, NULL, 3);
 	map->file_name = str;
 	map->col = 0;
 	map->line = 0;
@@ -28,10 +28,10 @@ t_map	*init_t_map_bonus(char *str)
 	map->score = 0;
 	map->component_data = ft_calloc(1, sizeof(t_components));
 	if (!map->component_data)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 3);
 	map->component_data->lst_component = ft_calloc(1, sizeof(t_componentlst));
 	if (!map->component_data)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 3);
 	map->component_data->lst_component->next = NULL;
 	map->component_data->hm_component = 0;
 	map->component_data->lst_component->is_loot = 0;

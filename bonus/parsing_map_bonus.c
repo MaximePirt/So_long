@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 22:15:47 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:42:55 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	how_many_line_bonus(char *file)
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit_func_bonus(0, NULL, NULL);
+		exit_func_bonus(0, NULL, NULL, 2);
 	str = get_next_line(fd);
 	while (str)
 	{
@@ -69,7 +69,7 @@ void	oh_problems_bonus(t_map *map, char *str, int i, int fd)
 	{
 		free(str);
 		str = NULL;
-		exit_func_bonus(fd, map, NULL);
+		exit_func_bonus(fd, map, NULL, 8);
 	}
 }
 
@@ -82,10 +82,10 @@ void	check_size_bonus(t_map *map)
 	i = 1;
 	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 2);
 	str = get_next_line(fd);
 	if (!str)
-		exit_func_bonus(fd, map, NULL);
+		exit_func_bonus(fd, map, NULL, 9);
 	map->line_len = ft_strlen(str);
 	map->size_x = map->line_len;
 	map->size_y = how_many_line_bonus(map->file_name);

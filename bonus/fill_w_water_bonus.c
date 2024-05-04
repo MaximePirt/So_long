@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:36:41 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 22:15:04 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:41:11 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	filltab_bonus(t_map *map)
 
 	fd = open(map->file_name, O_RDONLY);
 	if (fd == -1)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 2);
 	line = get_next_line(fd);
 	map->size_x = ft_strlen(line);
 	i = 0;
@@ -77,7 +77,7 @@ void	flood_fill_bonus(t_map *map, int x, int y)
 	flood_fill_bonus(map, x, y - 1);
 	flood_fill_bonus(map, x, y + 1);
 	if (map->player_data.player > 1 || map->exit_data.exit > 1)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 5);
 	return ;
 }
 
@@ -110,18 +110,15 @@ t_map	*preptoflood_bonus(char *str)
 	check_size_bonus(map);
 	map->map = ft_calloc(sizeof(char *), (map->size_y + 1));
 	if (!map->map)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 3);
 	filltab_bonus(map);
 	copy_map_to_mapfill_bonus(map);
 	component = hm_compo_bonus(map->map);
 	where_start_fill_bonus(map);
-	if (map->map[map->col][map->line] && map->map[map->col][map->line] != '\n')
-		flood_fill_bonus(map, map->col, map->line);
-	else
-		exit_func_bonus(0, map, NULL);
+	flood_fill_bonus(map, map->col, map->line);
 	if (component != map->component_data->hm_component + map->player_data.player
 		+ map->exit_data.exit || map->component_data->hm_component < 1)
-		exit_func_bonus(0, map, NULL);
+		exit_func_bonus(0, map, NULL, 5);
 	clean_flood_bonus(map);
 	return (map);
 }

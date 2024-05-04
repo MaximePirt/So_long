@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:34:06 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:37:16 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:43:32 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,37 @@ void	destroy(t_map *map, int which)
 	}
 }
 
-void	exit_func(int fd, t_map *lst, char **tab)
+void	send_error(int error_code)
+{
+	if (error_code == 1)
+		ft_putstr_fd("Args sent are wrong, \
+			program works like ./so_long map.ber\n",
+						2);
+	if (error_code == 2)
+		ft_putstr_fd("FD Error check if you have perms or if file exist\n", 2);
+	if (error_code == 3)
+		ft_putstr_fd("Malloc/Calloc problems, something went wrong\n", 2);
+	if (error_code == 4)
+		ft_putstr_fd("Find an unauthorised character\n", 2);
+	if (error_code == 5)
+		ft_putstr_fd("You got a problem in components numbers (exit, player, \
+			component)\n",
+						2);
+	if (error_code == 6)
+		ft_putstr_fd("MLX Init or Window init problem\n", 2);
+	if (error_code == 7)
+		ft_putstr_fd("Image problems, fd or convert to png problem\n", 2);
+	if (error_code == 8)
+		ft_putstr_fd("Possibilities : differents len size or unauthorised characters ",
+			2);
+	if (error_code == 9)
+		ft_putstr_fd("Get_next_line failed\n", 2);
+}
+
+void	exit_func(int fd, t_map *lst, char **tab, int error_code)
 {
 	ft_putstr_fd("Error\n", 2);
-	(void)fd;
+	send_error(error_code);
 	if (fd)
 		close(fd);
 	if (lst)

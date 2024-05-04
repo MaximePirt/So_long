@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:33:50 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/02 04:36:00 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:35:16 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ int							key_hook(int key, void *mlx);
 
 // end.c
 void						destroy(t_map *map, int which);
-void						exit_func(int fd, t_map *lst, char **tab);
+void						exit_func(int fd, t_map *lst, char **tab,
+								int error_code);
 
 // main.c
 int							window_hook(int event, void *param);

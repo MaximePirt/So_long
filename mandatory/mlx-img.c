@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:34:03 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 21:59:53 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 04:43:51 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ void	check_opening(t_map *map)
 	(void)map;
 	fd = open("textures/cons.png", O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	close(fd);
 	fd = open("textures/floor.png", O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	close(fd);
 	fd = open("textures/wall.png", O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	close(fd);
 	fd = open("sprites/player.png", O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	close(fd);
 	fd = open("sprites/exit.png", O_RDONLY);
 	if (fd == -1)
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	close(fd);
 }
 
@@ -58,7 +58,7 @@ void	init_img(t_map *map)
 		|| !map->mlx_data.img_compo)
 	{
 		destroy(map, 1);
-		exit_func(0, map, NULL);
+		exit_func(0, map, NULL, 7);
 	}
 }
 
