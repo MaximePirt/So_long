@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 13:33:50 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/04 04:37:20 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:39:38 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ typedef struct s_exit
 	int						x;
 	int						y;
 }							t_exit;
+typedef struct s_gun
+{
+	int						x;
+	int						y;
+	int						hm_gun;
+}							t_gun;
 
 typedef struct s_componentlst
 {
@@ -53,6 +59,22 @@ typedef struct s_components
 	int						hm_component;
 }							t_components;
 
+typedef enum e_enemy_type
+{
+	cops,
+	cap
+}							t_enemy_type;
+
+typedef struct s_enemy
+{
+	int						x;
+	int						y;
+	int						life;
+	int						dead;
+	t_enemy_type			type;
+	struct s_enemy			*next;
+}							t_enemy;
+
 typedef struct s_img
 {
 	int						x;
@@ -66,12 +88,17 @@ typedef struct s_mlx
 	void					*img_wall;
 	void					*img_compo;
 	void					*img_exit;
-	void					*p_sprite;
 	void					*img_floor_b;
 	void					*img_wall_b;
 	void					*img_compo_b;
 	void					*img_exit_b;
+	void					*img_exit_end;
+	void					*img_gun;
+	void					*p_sprite;
 	void					*p_sprite_b;
+	void					*enemy_sprite;
+	void					*enemy2_sprite;
+	void					*enemy2_sprite_move;
 	int						img_w;
 	int						img_h;
 	int						w_pov;
@@ -84,7 +111,9 @@ typedef struct s_map
 {
 	t_player				player_data;
 	t_exit					exit_data;
+	t_gun					gun_data;
 	t_components			*component_data;
+	t_enemy					*enemy_data;
 	t_img					img_data;
 	t_mlx					mlx_data;
 	char					**map_fill;
@@ -126,13 +155,20 @@ void						image_in_wdw_bonus(t_map *map);
 void						init_img_bonus(t_map *map);
 void						init_img_bonus_p(t_map *map);
 void						change_pov(t_map *map);
-// lst_func
+
+// lst_compo_func
 void						ft_lstadd_back_cmpnt_bonus(t_componentlst **lst,
 								t_componentlst *new);
 t_componentlst				*ft_datalstlast_cmpnt_bonus(t_componentlst *lst);
 t_componentlst				*ft_lstnew_cmpnt_bonus(t_componentlst *content,
 								int x, int y);
 void						ft_t_compolstclear_bonus(t_componentlst *lst);
+
+// lst_enemy_func
+void						ft_lstadd_front_enemy(t_enemy **lst, t_enemy *new);
+void						ft_lstadd_back_enemy(t_enemy **lst, t_enemy *new);
+t_enemy						*ft_datalstlast_enemy(t_enemy *lst);
+t_enemy						*ft_lstnew_enemy(t_enemy *content, int x, int y);
 
 // lst_func_init_clear
 t_map						*init_t_map_bonus(char *str);
@@ -144,6 +180,7 @@ void						move_down_bonus(t_map *map);
 void						move_left_bonus(t_map *map);
 void						move_right_bonus(t_map *map);
 int							key_hook_bonus(int key, void *mlx);
+void						put_player(t_map *map);
 
 // print score.c
 void						print_score(t_map *map);

@@ -6,7 +6,7 @@
 #    By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/11 15:03:26 by mpierrot          #+#    #+#              #
-#    Updated: 2024/05/03 15:29:48 by mpierrot         ###   ########.fr        #
+#    Updated: 2024/05/04 09:27:59 by mpierrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRC_F	= 	mandatory/main.c mandatory/parsing_map.c mandatory/fill_w_water.c manda
 			
 SRC_FB = 	bonus/main_bonus.c bonus/parsing_map_bonus.c bonus/fill_w_water_bonus.c bonus/lst_func_bonus.c  bonus/mlx-img_bonus.c \
 			bonus/end_bonus.c bonus/fill_w_water_utils_bonus.c bonus/key_mvmt_bonus.c bonus/lst_func_init_clear_bonus.c \
-			bonus/print_score.c \
+			bonus/print_score.c bonus/lst_enemy.c \
 			utils_to_delet.c
 			
 SRC_D	= src/

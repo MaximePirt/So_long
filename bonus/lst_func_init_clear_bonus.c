@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:26:19 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/04 04:44:06 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 07:03:14 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_map	*init_t_map_bonus(char *str)
 	map->component_data->lst_component->is_loot = 0;
 	map->player_data.player = 0;
 	map->exit_data.exit = 0;
+	map->gun_data.hm_gun = 0;
 	return (map);
 }
 

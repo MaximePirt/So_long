@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:16:29 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 21:26:59 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 08:59:33 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int					ft_check(char *res, char c);
 int					ft_checknop(char *res, char c);
 int					ft_check_only(char *res, char c);
 int					ft_check_only_string(char *res, char *c);
+int					ft_check_in_tab(char **tab, char c);
 void				free_tab(char **tab);
 
 #endif

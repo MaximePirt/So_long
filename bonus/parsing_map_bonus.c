@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:21:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/04 04:42:55 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:56:24 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	oh_problems_bonus(t_map *map, char *str, int i, int fd)
 		|| str[0] != '1' || str[map->line_len - 2] != '1' || (i == map->size_y
 			&& ft_check_only(str, '1') == -1) || (i == 1 && ft_check_only(str,
 				'1') == -1) || map->size_y < 3 || ((i > 1 && i != map->size_y)
-			&& ft_check_only_string(str, "10ECP\n") == -1))
+			&& ft_check_only_string(str, "10ECPGKN\n") == -1))
 	{
 		free(str);
 		str = NULL;

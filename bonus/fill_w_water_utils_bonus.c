@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 01:19:58 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/04 04:41:28 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 06:58:00 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ int	hm_compo_bonus(char **tab)
 		while (tab[a][i])
 		{
 			if (tab[a][i] != '1' && tab[a][i] != '0' && tab[a][i] != 'C'
-				&& tab[a][i] != 'E' && tab[a][i] != 'P' && tab[a][i] != '\n')
+				&& tab[a][i] != 'E' && tab[a][i] != 'P' && tab[a][i] != 'G'
+				&& tab[a][i] != 'K' && tab[a][i] != 'N' && tab[a][i] != '\n')
 				exit_func_bonus(0, NULL, tab, 4);
-			if (tab[a][i] == 'C' || tab[a][i] == 'E' || tab[a][i] == 'P')
+			if (tab[a][i] == 'C' || tab[a][i] == 'E' || tab[a][i] == 'P'
+				|| tab[a][i] == 'G')
 				compo++;
 			i++;
 		}

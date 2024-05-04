@@ -4,7 +4,7 @@ E - Exit
 C - Components to collect
 P - player
 G - Gun (only one a game)
-F - Ennemy
+K - Ennemy
 N - Ennemy type 2
 
 
@@ -61,7 +61,7 @@ str[0] && str[map->size] ✅
 11110111
 
 Le programme peut segfault si on change le point de vue bcp trop de fois/trop vite, mais pas avec valgrind active, je pense par consequent
-que c est un probleme d envoi  des signaux et ne vois pas comment je peux le gerer. ❌
+que c est un probleme d envoi  des signaux et ne vois pas comment je peux le gerer. ❌ ✅ Gerer
 
 For now, i added the pov change by touching P, everything seems to work
 
@@ -70,3 +70,7 @@ Go work on printing the score directly into the game screen
 Faire afficher uniquement map affichable et deplacer la map selon ou on est
 
 
+If i have no P, BIG SHITTY ERROR✅
+
+
+IMPLEMENTER LE CHECK MINN INPUT DANS LE MANDATORY

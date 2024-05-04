@@ -6,7 +6,7 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 03:33:00 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/03 21:26:05 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:03:01 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,31 @@ int	ft_check_only_string(char *res, char *c)
 		i++;
 	}
 	return (1);
+}
+
+#include <stdio.h>
+
+int	ft_check_in_tab(char **tab, char c)
+{
+	int	i;
+	int	j;
+	int	check;
+
+	j = 0;
+	i = 0;
+	while (tab[j])
+	{
+		check = 0;
+		while (tab[j][i])
+		{
+			if (tab[j][i] == c)
+				check++;
+			i++;
+		}
+		if (check != 0)
+			return (1);
+		i = 0;
+		j++;
+	}
+	return (-1);
 }

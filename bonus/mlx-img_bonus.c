@@ -6,11 +6,32 @@
 /*   By: mpierrot <mpierrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:34:03 by mpierrot          #+#    #+#             */
-/*   Updated: 2024/05/04 04:42:26 by mpierrot         ###   ########.fr       */
+/*   Updated: 2024/05/04 09:39:29 by mpierrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
+
+static void	check_opening_enemy(t_map *map)
+{
+	int	fd;
+
+	fd = open("bonus/sprites/enemy.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
+	close(fd);
+	fd = open("bonus/sprites/enemy2.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
+	close(fd);
+	fd = open("bonus/sprites/enemy2_move.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
+	fd = open("bonus/textures/gun.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
+	close(fd);
+}
 
 static void	check_opening_bonus(t_map *map)
 {
@@ -32,6 +53,9 @@ static void	check_opening_bonus(t_map *map)
 	if (fd == -1)
 		exit_func_bonus(0, map, NULL, 7);
 	close(fd);
+	fd = open("bonus/sprites/exit.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
 	fd = open("bonus/sprites/exit.png", O_RDONLY);
 	if (fd == -1)
 		exit_func_bonus(0, map, NULL, 7);
@@ -61,13 +85,38 @@ static void	check_opening_bonus_p(t_map *map)
 	fd = open("bonus/sprites/exitp.png", O_RDONLY);
 	if (fd == -1)
 		exit_func_bonus(0, map, NULL, 7);
+	fd = open("bonus/sprites/exit_end.png", O_RDONLY);
+	if (fd == -1)
+		exit_func_bonus(0, map, NULL, 7);
 	close(fd);
+}
+void	init_img_enemy(t_map *map)
+{
+	check_opening_enemy(map);
+	map->mlx_data.enemy_sprite = mlx_png_file_to_image(map->mlx_data.mlx,
+			"bonus/sprites/enemy.png", &map->mlx_data.img_w,
+			&map->mlx_data.img_h);
+	map->mlx_data.enemy2_sprite = mlx_png_file_to_image(map->mlx_data.mlx,
+			"bonus/sprites/enemy2.png", &map->mlx_data.img_w,
+			&map->mlx_data.img_h);
+	map->mlx_data.enemy2_sprite_move = mlx_png_file_to_image(map->mlx_data.mlx,
+			"bonus/sprites/enemy2_move.png", &map->mlx_data.img_w,
+			&map->mlx_data.img_h);
+	map->mlx_data.img_gun = mlx_png_file_to_image(map->mlx_data.mlx,
+			"bonus/textures/gun.png", &map->mlx_data.img_w,
+			&map->mlx_data.img_h);
+	if (!map->mlx_data.enemy2_sprite || !map->mlx_data.enemy2_sprite_move
+		|| !map->mlx_data.enemy_sprite)
+	{
+		destroy_bonus(map, 1);
+		exit_func_bonus(0, map, NULL, 7);
+	}
 }
 
 void	init_img_bonus(t_map *map)
 {
 	check_opening_bonus(map);
-	// destroy_bonus(map, 1);
+	init_img_enemy(map);
 	map->mlx_data.img_compo = mlx_png_file_to_image(map->mlx_data.mlx,
 			"bonus/textures/cons.png", &map->mlx_data.img_w,
 			&map->mlx_data.img_h);
@@ -83,6 +132,9 @@ void	init_img_bonus(t_map *map)
 	map->mlx_data.img_exit = mlx_png_file_to_image(map->mlx_data.mlx,
 			"bonus/sprites/exit.png", &map->mlx_data.img_w,
 			&map->mlx_data.img_h);
+	map->mlx_data.img_exit_end = mlx_png_file_to_image(map->mlx_data.mlx,
+			"bonus/sprites/exit_end.png", &map->mlx_data.img_w,
+			&map->mlx_data.img_h);
 	if (!map->mlx_data.img_floor || !map->mlx_data.img_wall
 		|| !map->mlx_data.img_exit || !map->mlx_data.p_sprite
 		|| !map->mlx_data.img_compo)
@@ -96,7 +148,7 @@ void	init_img_bonus(t_map *map)
 void	init_img_bonus_p(t_map *map)
 {
 	check_opening_bonus_p(map);
-	// destroy_bonus(map, 1);
+	init_img_enemy(map);
 	map->mlx_data.img_compo_b = mlx_png_file_to_image(map->mlx_data.mlx,
 			"bonus/textures/consp.png", &map->mlx_data.img_w,
 			&map->mlx_data.img_h);
@@ -122,6 +174,30 @@ void	init_img_bonus_p(t_map *map)
 	map->mlx_data.w_pov = 1;
 }
 
+void	forest_bonus_end(t_map *map, int i, int j)
+{
+	if (map->map[j][i] == 'K')
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.enemy_sprite, i * map->mlx_data.img_w, j
+			* map->mlx_data.img_h);
+	else if (map->map[j][i] == 'N')
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.enemy2_sprite, i * map->mlx_data.img_w, j
+			* map->mlx_data.img_h);
+	else if (map->map[j][i] == 'G')
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.img_gun, i * map->mlx_data.img_w, j
+			* map->mlx_data.img_h);
+	else if (map->map[j][i] == 'E' && map->component_data->hm_component < 1)
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.img_exit_end, i * map->mlx_data.img_w, j
+			* map->mlx_data.img_h);
+	else
+		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
+			map->mlx_data.img_exit, i * map->mlx_data.img_w, j
+			* map->mlx_data.img_h);
+}
+
 void	forest_bonus_p(t_map *map, int i, int j)
 {
 	if (map->map[j][i] == '1')
@@ -141,14 +217,10 @@ void	forest_bonus_p(t_map *map, int i, int j)
 		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
 			map->mlx_data.img_floor_b, i * map->mlx_data.img_w, j
 			* map->mlx_data.img_h);
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.p_sprite_b, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
+		put_player(map);
 	}
-	else if (map->map[j][i] == 'E')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_exit_b, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
+	else
+		forest_bonus_end(map, i, j);
 }
 
 void	forest_bonus(t_map *map, int i, int j)
@@ -170,14 +242,10 @@ void	forest_bonus(t_map *map, int i, int j)
 		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
 			map->mlx_data.img_floor, i * map->mlx_data.img_w, j
 			* map->mlx_data.img_h);
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.p_sprite, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
+		put_player(map);
 	}
-	else if (map->map[j][i] == 'E')
-		mlx_put_image_to_window(map->mlx_data.mlx, map->mlx_data.win,
-			map->mlx_data.img_exit, i * map->mlx_data.img_w, j
-			* map->mlx_data.img_h);
+	else
+		forest_bonus_end(map, i, j);
 }
 
 void	change_pov(t_map *map)
